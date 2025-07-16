@@ -1,35 +1,366 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import LandingPage from './LandingPage';
+import CartPage from './CartPage';
+import AboutPage from './AboutPage';
+import ProductsPage from './ProductsPage';
+import ProfilePage from './ProfilePage';
+import WorkWithUsPage from './WorkWithUsPage';
+import SideMenu from './SideMenu';
+import ContactPage from './ContactPage';
+import FooterSection from './FooterSection';
+import LoginPage from './LoginPage';
+
+import DisclosurePage from './DisclosurePage';//will add these
+import OffersPage from './OffersPage';
+import PrivacyPage from './PrivacyPage';
+import TermsPage from './TermsPage';
+import ShippingPage from './ShippingPage';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState('landing');
+  const [loggedin, setloggedin] = useState(false);
+  const [issidemenuopen, setissidemenuopen] = useState(false);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const togglesidemenu = () => {
+    setissidemenuopen(!issidemenuopen);
+  };
+
+  const handleLogin = () => {
+    setloggedin(true);
+    setCurrentPage('landing');
+  };
+
+  if (currentPage === 'login') {
+    return (
+      <LoginPage 
+        toLanding={() => setCurrentPage('landing')}
+        onLogin={handleLogin}
+        toSignup={() => setCurrentPage('signup')}
+      />
+    );
+  }
+
+  if (currentPage === 'signup') {
+    return (
+      <SignupPage 
+        toLanding={() => setCurrentPage('landing')}
+        onLogin={handleLogin}
+        toLogin={() => setCurrentPage('login')}
+      />
+    );
+  }
+
+  if (currentPage === 'contact') {
+    return (
+      <>
+        <ContactPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  if (currentPage === 'landing') {
+    return (
+      <>
+        <LandingPage 
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          toLogin={() => setCurrentPage('login')}
+          toSignup={() => setCurrentPage('signup')}
+          toLanding={() => setCurrentPage('landing')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  if (currentPage === 'cart') {
+    return (
+      <>
+        <CartPage 
+          toLanding={() => setCurrentPage('landing')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  if (currentPage === 'about') {
+    return (
+      <>
+        <AboutPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          toWorkWithUs={() => setCurrentPage('workwithus')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          toDisclosure={() => setCurrentPage('disclosure')}
+          toOffers={() => setCurrentPage('offers')}
+          toPrivacy={() => setCurrentPage('privacy')}
+          toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  if (currentPage === 'products') {
+    return (
+      <>
+        <ProductsPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          toDisclosure={() => setCurrentPage('disclosure')}
+          toOffers={() => setCurrentPage('offers')}
+          toPrivacy={() => setCurrentPage('privacy')}
+          toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  if (currentPage === 'profile') {
+    return (
+      <>
+        <ProfilePage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          toDisclosure={() => setCurrentPage('disclosure')}
+          toOffers={() => setCurrentPage('offers')}
+          toPrivacy={() => setCurrentPage('privacy')}
+          toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  if (currentPage === 'workwithus') {
+    return (
+      <>
+        <WorkWithUsPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          toDisclosure={() => setCurrentPage('disclosure')}
+          toOffers={() => setCurrentPage('offers')}
+          toPrivacy={() => setCurrentPage('privacy')}
+          toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  if (currentPage === 'disclosure') {
+    return (
+      <>
+        <WorkWithUsPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          //toDisclosure={() => setCurrentPage('disclosure')}
+          toOffers={() => setCurrentPage('offers')}
+          toPrivacy={() => setCurrentPage('privacy')}
+          toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+  if (currentPage === 'offers') {
+    return (
+      <>
+        <WorkWithUsPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          toDisclosure={() => setCurrentPage('disclosure')}
+          //toOffers={() => setCurrentPage('offers')}
+          toPrivacy={() => setCurrentPage('privacy')}
+          toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+  if (currentPage === 'privacy') {
+    return (
+      <>
+        <WorkWithUsPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          toDisclosure={() => setCurrentPage('disclosure')}
+          toOffers={() => setCurrentPage('offers')}
+          //toPrivacy={() => setCurrentPage('privacy')}
+          toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+  if (currentPage === 'terms') {
+    return (
+      <>
+        <WorkWithUsPage 
+          toLanding={() => setCurrentPage('landing')}
+          toCart={() => setCurrentPage('cart')}
+          toAbout={() => setCurrentPage('about')}
+          toProducts={() => setCurrentPage('products')}
+          toProfile={() => setCurrentPage('profile')}
+          loggedin={loggedin}
+          onToggleMenu={togglesidemenu}
+        />
+        <FooterSection 
+          toContact={() => setCurrentPage('contact')}
+          toAbout={() => setCurrentPage('about')}
+          toDisclosure={() => setCurrentPage('disclosure')}
+          toOffers={() => setCurrentPage('offers')}
+          toPrivacy={() => setCurrentPage('privacy')}
+          //toTerms={() => setCurrentPage('terms')}
+        />
+        <SideMenu 
+          isOpen={issidemenuopen}
+          onClose={() => setissidemenuopen(false)}
+          toProfile={() => setCurrentPage('profile')}
+          toCart={() => setCurrentPage('cart')}
+        />
+      </>
+    );
+  }
+
+  return null;
 }
 
-export default App
+export default App;
