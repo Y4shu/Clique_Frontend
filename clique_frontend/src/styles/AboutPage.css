@@ -1,14 +1,14 @@
-.container{
+.about-container{
     min-height:100vh;
     background-color:#000000;
     color:#ffffff;
   }
-.mainContent{
+.main-content{
     max-width:'1280px';
     margin:'0 auto';
     padding:'32px 16px'
   }
-.backButton{
+.backb{
     display:'flex';
     align-items:'center';
     gap:'8px';
@@ -20,7 +20,7 @@
     margin-bottom:'32px';
     transition:'all 0.3s ease'
   }
-.heroSection{
+.herosec{
     text-align:'center';
     padding:'80px 0';
     background:'linear-gradient(to bottom; rgba(0;0;0;0.5); rgba(0;0;0;0.8))'
@@ -35,44 +35,44 @@
     font-size:'14px';
     font-weight:'500'
   }
-.heroTitle{
+.herotitle{
     font-size:'60px';
     font-weight:'bold';
     margin-bottom:'24px'
   }
-.heroTitleAccent{
+.herotitleacc{
     background:'linear-gradient(135deg; hsl(45; 100%; 85%) 0%; hsl(35; 90%; 68%) 100%)';
     -webkit-background-clip:'text';
     -webkit-text-fill-color:'transparent';
     background-clip:'text'
   }
-.heroSubtitle{
+.herosubtit{
     font-size:'20px';
     color:'#9ca3af';
     line-height:'1.6';
     max-width:'768px';
     margin:'0 auto'
   }
-.section{
+.sec{
     padding:'80px 0'
   }
-.sectionGrid{
+.secgrid{
     display:'grid';
     grid-template-columns:'1fr 1fr';
     gap:'64px';
     align-items:'center'
   }
-.sectionTitle{
+.sectitle{
     font-size:'36px';
     font-weight:'bold';
     margin-bottom:'24px'
   }
-.sectionText{
+.sectext{
     color:'#9ca3af';
     margin-bottom:'24px';
     line-height:'1.6'
   }
-.primaryButton{
+.primb{
     background:'linear-gradient(135deg; hsl(45; 100%; 85%) 0%; hsl(35; 90%; 68%) 100%)';
     color:'#000000';
     padding:'12px 24px';
@@ -82,7 +82,7 @@
     cursor:'pointer';
     transition:'opacity 0.3s ease'
   }
-.secondaryButton{
+.secb{
     border:'2px solid hsl(45; 100%; 85%)';
     color:'hsl(45; 100%; 85%)';
     padding:'12px 24px';
@@ -98,17 +98,17 @@
     height:'auto';
     box-shadow:'0 25px 50px -12px rgba(0; 0; 0; 0.25)'
   }
-.valuesSection{
+.valssec{
     background-color:'#111827';
     padding:'80px 0'
   }
-.valuesGrid{
+.valsgrid{
     display:'grid';
     grid-template-columns:'repeat(auto-fit; minmax(250px; 1fr))';
     gap:'32px';
     margin-top:'64px'
   }
-.valueCard{
+.valcard{
     background-color:'#1f2937';
     border:'1px solid #374151';
     padding:'24px';
@@ -116,7 +116,7 @@
     text-align:'center';
     transition:'all 0.3s ease'
   }
-.valueIcon{
+.valicon{
     width:'48px';
     height:'48px';
     background:'rgba(251; 191; 36; 0.1)';
@@ -127,31 +127,31 @@
     margin:'0 auto 16px';
     color:'hsl(45; 100%; 85%)'
   }
-.valueTitle{
+.valtitle{
     font-size:'18px';
     font-weight:'600';
     margin-bottom:'12px'
   }
-.valueDescription{
+.valdesc{
     color:'#9ca3af';
     font-size:'14px';
     line-height:'1.6'
   }
-.timelineSection{
+.tlsec{
     padding:'80px 0'
   }
-.timelineContainer{
+.tlcontainer{
     max-width:'768px';
     margin:'0 auto';
     position:'relative'
   }
-.timelineItem{
+.tlitem{
     display:'flex';
     align-items:'flex-start';
     gap:'24px';
     margin-bottom:'32px'
   }
-.timelineIcon{
+.tlicon{
     width:'48px';
     height:'48px';
     background:'linear-gradient(135deg; hsl(45; 100%; 85%) 0%; hsl(35; 90%; 68%) 100%)';
@@ -163,14 +163,14 @@
     font-weight:'bold';
     flex-shrink:0
   }
-.timelineContent{
+.tlcontent{
     flex:1;
     background-color:'#111827';
     padding:'24px';
     border-radius:'8px';
     border:'1px solid #374151'
   }
-.timelineYear{
+.tlyr{
     font-size:'18px';
     font-weight:'600';
     background:'linear-gradient(135deg; hsl(45; 100%; 85%) 0%; hsl(35; 90%; 68%) 100%)';
@@ -179,74 +179,74 @@
     background-clip:'text';
     margin-bottom:'8px'
   }
-.timelineEvent{
+.tlevent{
     color:'#ffffff'
   }
-.ctaSection{
+.ctasec{
     padding:'80px 0';
     text-align:'center';
     background:'linear-gradient(to bottom; rgba(0;0;0;0.5); rgba(0;0;0;0.8))'
   }
-.ctaTitle{
+.ctatitle{
     font-size:'36px';
     font-weight:'bold';
     margin-bottom:'24px'
   }
-.ctaSubtitle{
+.ctasubtit{
     color:'#9ca3af';
     margin-bottom:'32px';
     font-size:'18px'
   }
-.ctaButtons{
+.ctabuttons{
     display:'flex';
     gap:'16px';
     justify-content:'center'
   }
-.contactSection{
+.contactsec{
     background-color:'#000000';
     padding:'80px 0'
   }
-.contactContainer{
+.contactcontainer{
     max-width:'768px';
     margin:'0 auto';
     padding:'0 16px'
   }
-.contactHeader{
+.contactheader{
     text-align:'center';
     margin-bottom:'48px'
   }
-.contactTitle{
+.contacttitle{
     font-size:'36px';
     font-weight:'bold';
     color:'#ffffff';
     margin-bottom:'16px'
   }
-.contactSubtitle{
+.contactsubtit{
     color:'#9ca3af';
     font-size:'18px'
   }
-.contactGrid{
+.contactgrid{
     display:'grid';
     grid-template-columns:'1fr 1fr';
     gap:'48px'
   }
-.contactInfo{
+.contactinfo{
     display:'flex';
     flex-direction:'column';
     gap:'32px'
   }
-.contactInfoTitle{
+.contactinfotit{
     font-size:'20px';
     font-weight:'600';
     color:'#ffffff';
     margin-bottom:'24px'
   }
-.contactItem{
+.contactitem{
     display:'flex';
     align-items:'center';
     gap:'12px'
   }
-.contactIcon{
+.contacticon{
     width:'40px';
     height:'40px';
     background:'linear-gradient(135deg; hsl(45; 100%; 85%) 0%; hsl(35; 90%; 68%) 100%)';
@@ -258,15 +258,15 @@
     font-weight:'600';
     color:'#000000'
   }
-.contactDetails{
+.contactdetails{
     display:'flex';
     flex-direction:'column'
   }
-.contactLabel{
+.contactlab{
     color:'#9ca3af';
     font-size:'14px'
   }
-.contactValue{
+.contactval{
     color:'#ffffff'
   }
 .form{
@@ -274,12 +274,12 @@
     flex-direction:'column';
     gap:'24px'
   }
-.formRow{
+.formrow{
     display:'grid';
     grid-template-columns:'1fr 1fr';
     gap:'16px'
   }
-.formGroup{
+.formgrp{
     display:'flex';
     flex-direction:'column'
   }
@@ -300,7 +300,7 @@
     font-size:'16px';
     transition:'border-color 0.3s ease'
   }
-.text-area{
+.textarea{
     width:'100%';
     background-color:'#1f2937';
     border:'1px solid #374151';
@@ -311,7 +311,7 @@
     resize:'none';
     transition:'border-color 0.3s ease'
   }
-.submitButton{
+.submitbutton{
     width:'100%';
     background:'linear-gradient(135deg; hsl(45; 100%; 85%) 0%; hsl(35; 90%; 68%) 100%)';
     color:'#000000';
