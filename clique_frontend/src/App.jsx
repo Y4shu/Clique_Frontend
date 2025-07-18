@@ -5,362 +5,154 @@ import AboutPage from './AboutPage';
 import ProductsPage from './ProductsPage';
 import ProfilePage from './ProfilePage';
 import WorkWithUsPage from './WorkWithUsPage';
+import WishlistPage from './WishlistPage';
+import OrdersPage from './OrdersPage';
 import SideMenu from './SideMenu';
 import ContactPage from './ContactPage';
 import FooterSection from './FooterSection';
 import LoginPage from './LoginPage';
-
-import DisclosurePage from './DisclosurePage';//will add these
+import SignupPage from './SignupPage';
+import DisclosurePage from './DisclosurePage';
 import OffersPage from './OffersPage';
 import PrivacyPage from './PrivacyPage';
 import TermsPage from './TermsPage';
 import ShippingPage from './ShippingPage';
+import SitemapPage from './SiteMapPage';
+import EditProfilePage from './EditProfilePage';
+import wool_coat from './assets/wool coat.png';
+import leather_jacket from './assets/leather jacket.png';
+import scarf from './assets/scarf.png';
+import gown from './assets/gown.png';
+import pearlbag from './assets/pearl bag.png';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('landing');
-  const [loggedin, setloggedin] = useState(false);
-  const [issidemenuopen, setissidemenuopen] = useState(false);
+  const [cartItems, setCartItems] = React.useState([
+    {
+      id: 1,
+      name: "Premium Leather Jacket",
+      price: 299.99,
+      quantity: 1,
+      image: {leather_jacket},
+      size: "M",
+      color: "Charcoal Black"
+    },
+    {
+      id: 2,
+      name: "Scandavian Silk Scarf",
+      price: 89.99,
+      quantity: 2,
+      image: {scarf},
+      size: "One Size",
+      color: "Blue Floral Print"
+    },
+    {
+      id: 3,
+      name: "Noven Wool Coat",
+      price: 449.99,
+      quantity: 1,
+      image: {wool_coat},
+      size: "L",
+      color: "Burnt Butter"
+    }
+  ]);
 
-  const togglesidemenu = () => {
-    setissidemenuopen(!issidemenuopen);
+  const [wishlistItems, setWishlistItems] = React.useState([
+    {
+      id: 4,
+      name: "Fairy Evening Gown",
+      price: 199.99,
+      image: {gown},
+      size: "M",
+      color: "Ruby Red",
+      inStock: true
+    },
+    {
+      id: 5,
+      name: "Pearl Cluth Bag",
+      price: 299.99,
+      image: {pearlbag},
+      size: "One Size",
+      color: "Pearly Wihte",
+      inStock: true
+    },
+    {
+      id: 6,
+      name: "TearDrop Pearl Necklace",
+      price: 79.99,
+      image: {teardroppearlnecklace},
+      size: "One Size",
+      color: "Gold",
+      inStock: true
+    }
+  ]);
+
+  const moveToCart = (wishlistItem) => {
+    const existingCartItem = cartItems.find(item => item.id === wishlistItem.id);
+    
+    if (existingCartItem) {
+      setCartItems(cartItems.map(item => 
+        item.id === wishlistItem.id 
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      ));
+    } else {
+      const cartItem = {
+        ...wishlistItem,
+        quantity: 1
+      };
+      setCartItems([...cartItems, cartItem]);
+    }
+    
+    setWishlistItems(wishlistItems.filter(item => item.id !== wishlistItem.id));
   };
 
-  const handleLogin = () => {
-    setloggedin(true);
-    setCurrentPage('landing');
-  };
+  return (
+    <Router>
+      <div>
+      <Header 
+          cartCount={cartItems.length}
+          wishlistCount={wishlistItems.length}
+          onNavigateToLanding={() => window.location.href = '/'}
+          onNavigateToProducts={() => window.location.href = '/products'}
+          onNavigateToAbout={() => window.location.href = '/about'}
+          onNavigateToCart={() => window.location.href = '/cart'}
+          onNavigateToProfile={() => window.location.href = '/profile'}
+          onNavigateToWishlist={() => window.location.href = '/wishlist'}
+          onNavigateToLogin={() => window.location.href = '/login'}
+          onNavigateToSignup={() => window.location.href = '/signup'}
+        />
 
-  if (currentPage === 'login') {
-    return (
-      <LoginPage 
-        toLanding={() => setCurrentPage('landing')}
-        onLogin={handleLogin}
-        toSignup={() => setCurrentPage('signup')}
-      />
-    );
-  }
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/cart" element={<CartPage cartItems={cartItems} setCartItems={setCartItems} />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/work-with-us" element={<WorkWithUsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/wishlist" element={
+            <WishlistPage 
+              wishlistItems={wishlistItems}
+              setWishlistItems={setWishlistItems}
+              onMoveToCart={moveToCart}
+            />
+          } />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/offers" element={<OffersPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/shipping" element={<ShippingPage />} />
+          <Route path="/sitemap" element={<SitemapPage />} />
+        </Routes>
 
-  if (currentPage === 'signup') {
-    return (
-      <SignupPage 
-        toLanding={() => setCurrentPage('landing')}
-        onLogin={handleLogin}
-        toLogin={() => setCurrentPage('login')}
-      />
-    );
-  }
-
-  if (currentPage === 'contact') {
-    return (
-      <>
-        <ContactPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  if (currentPage === 'landing') {
-    return (
-      <>
-        <LandingPage 
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          toLogin={() => setCurrentPage('login')}
-          toSignup={() => setCurrentPage('signup')}
-          toLanding={() => setCurrentPage('landing')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  if (currentPage === 'cart') {
-    return (
-      <>
-        <CartPage 
-          toLanding={() => setCurrentPage('landing')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  if (currentPage === 'about') {
-    return (
-      <>
-        <AboutPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          toWorkWithUs={() => setCurrentPage('workwithus')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          toDisclosure={() => setCurrentPage('disclosure')}
-          toOffers={() => setCurrentPage('offers')}
-          toPrivacy={() => setCurrentPage('privacy')}
-          toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  if (currentPage === 'products') {
-    return (
-      <>
-        <ProductsPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          toDisclosure={() => setCurrentPage('disclosure')}
-          toOffers={() => setCurrentPage('offers')}
-          toPrivacy={() => setCurrentPage('privacy')}
-          toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  if (currentPage === 'profile') {
-    return (
-      <>
-        <ProfilePage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          toDisclosure={() => setCurrentPage('disclosure')}
-          toOffers={() => setCurrentPage('offers')}
-          toPrivacy={() => setCurrentPage('privacy')}
-          toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  if (currentPage === 'workwithus') {
-    return (
-      <>
-        <WorkWithUsPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          toDisclosure={() => setCurrentPage('disclosure')}
-          toOffers={() => setCurrentPage('offers')}
-          toPrivacy={() => setCurrentPage('privacy')}
-          toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  if (currentPage === 'disclosure') {
-    return (
-      <>
-        <WorkWithUsPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          //toDisclosure={() => setCurrentPage('disclosure')}
-          toOffers={() => setCurrentPage('offers')}
-          toPrivacy={() => setCurrentPage('privacy')}
-          toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-  if (currentPage === 'offers') {
-    return (
-      <>
-        <WorkWithUsPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          toDisclosure={() => setCurrentPage('disclosure')}
-          //toOffers={() => setCurrentPage('offers')}
-          toPrivacy={() => setCurrentPage('privacy')}
-          toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-  if (currentPage === 'privacy') {
-    return (
-      <>
-        <WorkWithUsPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          toDisclosure={() => setCurrentPage('disclosure')}
-          toOffers={() => setCurrentPage('offers')}
-          //toPrivacy={() => setCurrentPage('privacy')}
-          toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-  if (currentPage === 'terms') {
-    return (
-      <>
-        <WorkWithUsPage 
-          toLanding={() => setCurrentPage('landing')}
-          toCart={() => setCurrentPage('cart')}
-          toAbout={() => setCurrentPage('about')}
-          toProducts={() => setCurrentPage('products')}
-          toProfile={() => setCurrentPage('profile')}
-          loggedin={loggedin}
-          onToggleMenu={togglesidemenu}
-        />
-        <FooterSection 
-          toContact={() => setCurrentPage('contact')}
-          toAbout={() => setCurrentPage('about')}
-          toDisclosure={() => setCurrentPage('disclosure')}
-          toOffers={() => setCurrentPage('offers')}
-          toPrivacy={() => setCurrentPage('privacy')}
-          //toTerms={() => setCurrentPage('terms')}
-        />
-        <SideMenu 
-          isOpen={issidemenuopen}
-          onClose={() => setissidemenuopen(false)}
-          toProfile={() => setCurrentPage('profile')}
-          toCart={() => setCurrentPage('cart')}
-        />
-      </>
-    );
-  }
-
-  return null;
+        <FooterSection />
+      </div>
+    </Router>
+  );
 }
 
 export default App;
