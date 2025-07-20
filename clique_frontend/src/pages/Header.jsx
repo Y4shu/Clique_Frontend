@@ -3,40 +3,39 @@ import PropTypes from 'prop-types';
 import { Search, User, ShoppingBag, Menu, Heart } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from './assets/clique_logo.png';
-import '.styles/Header.css';
-
-function NavButton({ path, label, currentPath, navigate }) {
-  const active = currentPath === path;
-
-  return (
-    <button
-      onClick={() => navigate(`/${path}`)}
-      className={active ? 'navLink active' : 'navspeclink'}
-      onMouseEnter={(e) => { if (!active) e.target.style.color = '#f9fafb'; }}
-      onMouseLeave={(e) => { if (!active) e.target.style.color = '#ffffff'; }}
-      style={{ cursor: active ? 'default' : 'pointer' }}
-    >
-      {label}
-    </button>
-  );
-}
+import './styles/Header.css';
 
 function Header({ cartCount = 3, wishlistCount = 3, loggedin = false, menumove }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentPath = useMemo(() => location.pathname === '/' ? 'home' : location.pathname.slice(1), [location.pathname]);
 
-  const iconClass = (page) => currentPath === page ? 'iconb aicon' : 'iconb';
+  const currentpath = useMemo(() => {
+    const path = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+    return path || 'home';
+  }, [location.pathname]);
+
+  const safenav = (path) => {
+    if (typeof path === 'string') {
+      try {
+        navigate(path);
+      } catch (error) {
+        console.error(`Navigation error: ${path}`, error);
+      }
+    }
+  };
+
+  const activated = (page) => currentpath === page;
+  const navbclasss = (page) => `navLink${activated(page) ? ' act' : ''}`;
+  const iconclass = (page) => `iconb${activated(page) ? ' aicon' : ''}`;
 
   return (
     <header className="header">
       <div className="headercontent">
-
         <div
           className="logo"
-          onClick={() => navigate('/')}
-          onMouseEnter={(e) => e.target.style.opacity = '0.8'}
-          onMouseLeave={(e) => e.target.style.opacity = '1'}
+          onClick={() => safenav('/')}
+          onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
+          onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
         >
           <img src={logo} alt="CLIQUE Logo" className="logoImage" />
           CLIQUE
@@ -44,10 +43,18 @@ function Header({ cartCount = 3, wishlistCount = 3, loggedin = false, menumove }
 
         <nav className="nav hiddenm">
           <div className="navlinks">
-            <NavButton path="home" label="Home" currentPath={currentPath} navigate={navigate} />
-            <NavButton path="products" label="Products" currentPath={currentPath} navigate={navigate} />
-            <NavButton path="about" label="About Us" currentPath={currentPath} navigate={navigate} />
-            <NavButton path="cart" label="Cart" currentPath={currentPath} navigate={navigate} />
+            {['home', 'products', 'about', 'cart'].map((page) => (
+              <button
+                key={page}
+                className={navbclasss(page)}
+                onClick={() => safenav(`/${page === 'home' ? '' : page}`)}
+                onMouseEnter={(e) => !activated(page) && (e.currentTarget.style.color = '#f9fafb')}
+                onMouseLeave={(e) => !activated(page) && (e.currentTarget.style.color = '#ffffff')}
+                style={{ cursor: activated(page) ? 'default' : 'pointer' }}
+              >
+                {page === 'about' ? 'About Us' : page.charAt(0).toUpperCase() + page.slice(1)}
+              </button>
+            ))}
           </div>
         </nav>
 
@@ -56,16 +63,16 @@ function Header({ cartCount = 3, wishlistCount = 3, loggedin = false, menumove }
             <Search size={20} />
           </button>
 
-          <button onClick={() => navigate('/wishlist')} className={iconClass('wishlist')}>
+          <button onClick={() => safenav('/wishlist')} className={iconclass('wishlist')}>
             <Heart size={20} />
             <span className="cartthingy">{wishlistCount}</span>
           </button>
 
-          <button onClick={() => navigate('/profile')} className={iconClass('profile')}>
+          <button onClick={() => safenav('/profile')} className={iconclass('profile')}>
             <User size={20} />
           </button>
 
-          <button onClick={() => navigate('/cart')} className={iconClass('cart')}>
+          <button onClick={() => safenav('/cart')} className={iconclass('cart')}>
             <ShoppingBag size={20} />
             <span className="cartthingy">{cartCount}</span>
           </button>
@@ -76,8 +83,8 @@ function Header({ cartCount = 3, wishlistCount = 3, loggedin = false, menumove }
             </button>
           ) : (
             <>
-              <button onClick={() => navigate('/login')} className="authibutton">Login</button>
-              <button onClick={() => navigate('/signup')} className="signUpButton">Sign up</button>
+              <button onClick={() => safenav('/login')} className="authibutton">Login</button>
+              <button onClick={() => safenav('/signup')} className="signUpButton">Sign up</button>
             </>
           )}
         </div>
@@ -90,8 +97,7 @@ Header.propTypes = {
   cartCount: PropTypes.number,
   wishlistCount: PropTypes.number,
   loggedin: PropTypes.bool,
-  menumove: PropTypes.func
+  menumove: PropTypes.func,
 };
 
-export default Header; 
-export { NavButton };
+export default Header;
