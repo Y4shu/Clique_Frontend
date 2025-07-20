@@ -355,3 +355,32 @@
     cursor:pointer;
     transition:all 0.3s eas'
   }
+
+@media (max-width: 768px) {
+  .secgrid,
+  .contactgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctabuttons {
+    flex-direction: column;
+  }
+
+  .herotitle {
+    font-size: 40px;
+  }
+
+  .sectitle,
+  .contacttitle,
+  .ctatitle {
+    font-size: 28px;
+  }
+}
+
+
+
+
+
+
+
+

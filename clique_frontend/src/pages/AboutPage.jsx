@@ -5,8 +5,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from './Header';
 import './styles/AboutPage.css';
 import clique_experience from './assets/clique_experience.jpg';
-import clique_team from './assets/clique_team.jpg';
-import bouqtique from './assets/bouqtique.jpg';
+import clique_team from './assets/clique_team.png';
+import bouqtique from './assets/bouqtique.png';
 
 function AboutPage({ loggedin = false, menumove }) {
   const navigate = useNavigate();

@@ -33,11 +33,14 @@
   border-radius: 50%;
 }
 
-/* @media (min-width: 640px) {
+@media (min-width: 640px) {
   .hiddenm {
     display: flex;
   }
-} */
+  .nav {
+    display: none;
+  }
+}
 
 .nav {
   display: flex;
