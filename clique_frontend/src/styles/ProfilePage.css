@@ -90,6 +90,25 @@
   transform: translateY(-4px);
   box-shadow: 0 20px 25px -5px rgba(251,191,36,0.1);
 }
+.staticon {
+  background: linear-gradient(135deg, hsl(45, 100%, 85%) 0%, hsl(35, 90%, 68%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+.statno {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+.statlabel {
+  color: #9ca3af;
+  font-size: 16px;
+}
 
 .profilesec {
   background: #111827; 

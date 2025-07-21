@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import './styles/FooterSection.css';
 
 function FooterSection({ loggedin, menumove }) {
-  const navigate = useNavigate();
+  const navigate= useNavigate();
 
-  const safenav = (path) => {
-    if (typeof path === 'string') {
+  const safenav= (path)=>{
+    if (typeof path=== 'string') {
       try {
         navigate(path);
       } catch (e) {
@@ -18,7 +18,7 @@ function FooterSection({ loggedin, menumove }) {
     }
   };
 //mc compile
-  const footerData = [
+  const footerData= [
     {
       title: 'WHO ARE WE',
       links: [
@@ -51,7 +51,7 @@ function FooterSection({ loggedin, menumove }) {
       <div className="topSection">
         <div className="topContent">
           <div className="downloadSection">
-            <h3 className="downloadTitle">DOWNLOAD OUR APP</h3>
+            <h3 className="downloadTitle">DOWNLOAD THE APP</h3>
             <div className="appButtons">
               <img
                 src="/images/google-play-badge.svg"
@@ -67,7 +67,7 @@ function FooterSection({ loggedin, menumove }) {
           </div>
 
           <div className="helpSection">
-            <h3 className="helpTitle">FOR ANY HELP, YOU MAY CALL US AT</h3>
+            <h3 className="helpTitle">FOR ANY HELP, CALL US AT</h3>
             <div className="helpPhone">+91 4778349067</div>
             <div className="helpHours">
               (Mon to Sat: 10am to 10pm, Sun: 10am to 7pm)
@@ -78,17 +78,17 @@ function FooterSection({ loggedin, menumove }) {
 
       <div className="mainFooter">
         <div className="footerGrid">
-          {footerData.map((col) => (
+          {footerData.map((col)=>(
             <div key={col.title} className="footerColumn">
               <h4 className="columnTitle">{col.title}</h4>
               <div className="columnLinks">
-                {col.links.map((lnk) => (
+                {col.links.map((lnk)=>(
                   <button
                     key={lnk.path}
                     className={`footerLink ${
-                      lnk.label === 'Get in Touch' ? 'contactHighlight' : ''
+                      lnk.label=== 'Get in Touch' ? 'contactHighlight' : ''
                     }`}
-                    onClick={() => safenav(lnk.path)}
+                    onClick={()=>safenav(lnk.path)}
                   >
                     {lnk.label}
                   </button>
@@ -101,16 +101,16 @@ function FooterSection({ loggedin, menumove }) {
             <h4 className="columnTitle">FOLLOW US</h4>
             <div className="socialLinks">
               <button
-                onClick={() =>
-                  window.open('https://instagram.com', '_blank', 'noopener noreferrer')
+                onClick={()=>
+                  window.open('https://instagram.com', '_blank', 'no referencererrer')
                 }
                 className="socialIcon"
                 aria-label="Instagram"
               >
-                📷
+                📸 //insta icon nhi tha
               </button>
               <button
-                onClick={() =>
+                onClick={()=>
                   window.open('https://twitter.com', '_blank', 'noopener noreferrer')
                 }
                 className="socialIcon"
@@ -132,7 +132,7 @@ function FooterSection({ loggedin, menumove }) {
   );
 }
 
-FooterSection.propTypes = {
+FooterSection.propTypes= {
   loggedin: PropTypes.bool,
   menumove: PropTypes.func,
 };

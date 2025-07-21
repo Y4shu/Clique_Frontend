@@ -40,6 +40,14 @@
   .nav {
     display: none;
   }
+  .headerActions {
+    gap: 0.5rem;
+  }
+
+  .authibutton, .signUpButton {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
 }
 
 .nav {
@@ -47,7 +55,11 @@
   justify-content: center;
   flex: 1;
 }
+.nav:hover, .iconb:hover {
+  color: #fff;
+  opacity: 0.8;
 
+}
 .navlinks {
   display: flex;
   gap: 32px;

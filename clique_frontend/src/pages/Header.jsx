@@ -33,10 +33,7 @@ function Header({ cartCount = 3, wishlistCount = 3, loggedin = false, menumove }
       <div className="headercontent">
         <div
           className="logo"
-          onClick={() => safenav('/')}
-          onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
-          onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-        >
+          onClick={() => safenav('/')}  >
           <img src={logo} alt="CLIQUE Logo" className="logoImage" />
           CLIQUE
         </div>
@@ -48,8 +45,6 @@ function Header({ cartCount = 3, wishlistCount = 3, loggedin = false, menumove }
                 key={page}
                 className={navbclasss(page)}
                 onClick={() => safenav(`/${page === 'home' ? '' : page}`)}
-                onMouseEnter={(e) => !activated(page) && (e.currentTarget.style.color = '#f9fafb')}
-                onMouseLeave={(e) => !activated(page) && (e.currentTarget.style.color = '#ffffff')}
                 style={{ cursor: activated(page) ? 'default' : 'pointer' }}
               >
                 {page === 'about' ? 'About Us' : page.charAt(0).toUpperCase() + page.slice(1)}
@@ -59,7 +54,7 @@ function Header({ cartCount = 3, wishlistCount = 3, loggedin = false, menumove }
         </nav>
 
         <div className="headerActions">
-          <button className="iconb" onMouseEnter={(e) => e.target.style.color = '#ffffff'} onMouseLeave={(e) => e.target.style.color = '#9ca3af'}>
+          <button className="iconb">
             <Search size={20} />
           </button>
 

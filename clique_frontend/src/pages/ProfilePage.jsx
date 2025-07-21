@@ -62,16 +62,16 @@ function ProfilePage({ loggedin, onToggleMenu, cartcount, wishlistcount }) {
 
         <div className="profilestats">
           <div className="statcard" onClick={() => nav('/orders')}>
-            <Package size={32} />
-            <h3>{user.ordersCount} Orders</h3>
+            <Package className="staticon" size={32} />
+            <h3 className="statno">{user.ordersCount} Orders</h3>
           </div>
           <div className="statcard" onClick={() => nav('/wishlist')}>
-            <Heart size={32} />
-            <h3>{user.wishlistcount} Wishlist Items</h3>
+            <Heart className="staticon" size={32} />
+            <h3 className="statno">{user.wishlistcount} Wishlist Items</h3>
           </div>
           <div className="statcard">
-            <Star size={32} />
-            <h3>{creditpoints} Points</h3>
+            <Star className="staticon" size={32} />
+            <h3 className="statno">{creditpoints} Points</h3>
           </div>
         </div>
 
