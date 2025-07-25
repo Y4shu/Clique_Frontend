@@ -5,24 +5,28 @@ import './styles/loginpage.css';
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [formData, setformdata] = useState({
+  const [forminfo, setforminfo] = useState({
     email: '',
     password: ''
   });
 
   const changedinput = (e) => {
-    setformdata({
-      ...formData,
-      [e.target.name]: e.target.value
+    const { type, name, value, checked } = e.target;
+    setforminfo({
+      ...forminfo,
+      [name]: type === 'checkbox' ? checked : value
     });
   };
 
   const submission = (e) => {
     e.preventDefault();
 
-    if (formData.email && formData.password) {
-      console.log('Logging in with', formData);
-      navigate('/landing'); //moving to landing page after login but if u want we can change
+    if (forminfo.email && forminfo.password) {
+      if (forminfo.isAdmin) {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/landing');
+      }
     } else {
       alert('Please fill in all fields');
     }
@@ -52,7 +56,7 @@ function LoginPage() {
               type="email"
               id="email"
               name="email"
-              value={formData.email}
+              value={forminfo.email}
               onChange={changedinput}
               required
               className="inputfield"
@@ -66,14 +70,24 @@ function LoginPage() {
               type="password"
               id="password"
               name="password"
-              value={formData.password}
+              value={forminfo.password}
               onChange={changedinput}
               required
               className="inputfield"
               placeholder="Your password"
             />
           </div>
-
+          <div className="formgrp checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="isAdmin"
+                checked={forminfo.isAdmin}
+                onChange={handleInputChange}
+              />
+              <span>Sign in as Administrator</span>
+            </label>
+          </div>
           <button type="submit" className="submitb">
             LogIn
           </button>
