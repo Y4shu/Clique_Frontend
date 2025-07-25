@@ -86,6 +86,10 @@
   font-size: 16px;
   transition: border-color 0.3s ease;
 }
+.inputfield:focus {
+  border-color: hsl(45, 100%, 85%);
+  outline: none;
+}
 
 .submitb {
   width: 100%;
