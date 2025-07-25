@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
-import './ContactPage.css';
+import '.styles/ContactPage.css';
 
 function ContactPage({ loggedin, menumove, cartcount=0, wishlistcount=0 }) {
   const navigate=useNavigate();

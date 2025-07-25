@@ -7,7 +7,7 @@ import ProfilePage from './pages/ProfilePage';
 import WorkWithUsPage from './pages/WorkWithUsPage';
 import WishlistPage from './pages/WishlistPage';
 import OrdersPage from './pages/OrdersPage';
-import SideMenu from './pages/SideMenu';
+import SideMenu from './pagestocomplete/SideMenu';
 import ContactPage from './pages/ContactPage';
 import FooterSection from './pages/FooterSection';
 import LoginPage from './pages/LoginPage';

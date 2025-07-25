@@ -1,100 +1,157 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import Header from '../components/Header';
-import './styles/orderspage.css';
+import { ArrowLeft, Package, Truck, CheckCircle, Clock, Eye, RotateCcw } from 'lucide-react';
+import Header from './Header';
+import '.styles/ordersPage.css';
 
-function OrdersPage({ loggedin, cartcount, wishlistcount, menumove }) {
-  const navigate=useNavigate();
-  const [orders, setOrders]=useState([]);
-  const [filter, setfilter]=useState('all');
-  const [loading, setloading]=useState(true);
-  const [error, seterror]=useState('');
+function ordersPage() {
+  const [activefilter, setactivefilter] = useState('all');
+  const [orders, setorders] = useState([]);
+  const [loading, setloading] = useState(true);
+  const [error, seterror] = useState(null);
+  const navigate = useNavigate();
 
-  useEffect(()=> {
-    fetch() //api ka error handling add
-  }, []);
+  useEffect(() => {
+    async function fetchorders() {
+      try {
+        setloading(true);
+        const response = await axios.get('/api/orders', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
 
-  const filteredOrders=filter==='all'
+        const { orders: batchedorders } = response.data;
+        const formattedorders = [];
+
+        batchedorders.forEach((batch, batchIndex) => {
+          batch.forEach(order => {
+            formattedorders.push({
+              id: order._id,
+              product: order.product,
+              quantity: order.quantity,
+              status: order.status,
+              size: order.size,
+              time: order.createdAt,
+              batchNumber: batchIndex + 1
+            });
+          });
+        });
+
+        setorders(formattedorders);
+      } catch (err) {
+        console.error(err);
+        seterror('Failed to load orders. Please try again later.');
+      } finally {
+        setloading(false);
+      }
+    }
+    fetchorders();
+  }, [activefilter]);
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'delivered': return <CheckCircle size={16} />;
+      case 'shipped': return <Truck size={16} />;
+      case 'pending': return <Clock size={16} />;
+      case 'schedule_return': return <RotateCcw size={16} />;
+      case 'cancelled': return <RotateCcw size={16} />;
+      default: return <Package size={16} />;
+    }
+  };
+
+  const filteredorders = activefilter === 'all'
     ? orders
-    :orders.filter(order=> order.status===filter);
+    : orders.filter(order => order.status === activefilter);
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric' });};
 
   return (
     <div className="orders-container">
-      <Header
-        cartcount={cartcount} wishlistcount={wishlistcount}
-        loggedin={loggedin}
-        menumove={menumove}
-      />
+      <Header />
 
-      <main className="orders-main">
-        <button className="back-btn" onClick={()=> navigate('/')}>
+      <div className="main-content">
+        <button className="backb" onClick={() => navigate('/profile')}>
           <ArrowLeft size={20} />
-          <span>Back to Home</span>
+          <span>Back to Profile</span>
         </button>
 
-        <div className="orders-hero">
-          <h1 className="orders-title">
-            Your <span className="orders-highlight">Orders</span>
-          </h1>
-          <p className="orders-subtitle">
-            Track your purchases, and delivery status. Thank you for shopping with us!
-          </p>
-        </div>
+        <h1 className="pagetitle">My orders</h1>
 
-        <div className="orders-filter">
-          <button
-            className={`filter-btn ${filter==='all' ? 'active' :''}`}
-            onClick={()=> setfilter('all')}
-          >
-            All
-          </button>
-          <button
-            className={`filter-btn ${filter==='processing' ? 'active' :''}`}
-            onClick={()=> setfilter('processing')}
-          >
-            Processing
-          </button>
-          <button
-            className={`filter-btn ${filter==='shipped' ? 'active' :''}`}
-            onClick={()=> setfilter('shipped')}
-          >
-            Shipped
-          </button>
-          <button
-            className={`filter-btn ${filter==='delivered' ? 'active' :''}`}
-            onClick={()=> setfilter('delivered')}
-          >
-            Delivered
-          </button>
-        </div>
-
-        {loading && <p className="orders-status-msg">Loading orders...</p>}
-        {error && <p className="orders-error-msg">{error}</p>}
-        {!loading && !error && filteredOrders.length===0 && (
-          <p className="orders-status-msg">No orders found.</p>
-        )}
-
-        <div className="orders-list">
-          {filteredOrders.map((order)=> (
-            <div key={order.id} className="order-card">
-              <div className="order-header">
-                <p className="order-id">Order #{order.id}</p>
-                <span className={`order-status ${order.status}`}>
-                  {order.status}
-                </span>
-              </div>
-              <div className="order-details">
-                <p><strong>Date:</strong> {order.date}</p>
-                <p><strong>Items:</strong> {order.items.length}</p>
-                <p><strong>Total:</strong> ₹{order.total}</p>
-              </div>
-            </div>
+        <div className="filtertabs">
+          {['all', 'pending', 'shipped', 'delivered', 'schedule_return', 'returned', 'approve_return', 'cancelled'].map((filter) => (
+            <button
+              key={filter}
+              className={`filtertab ${activefilter === filter ? 'a' : ''}`}
+              onClick={() => setactivefilter(filter)}
+            >
+              {filter.charAt(0).toUpperCase() + filter.slice(1).replace('_', ' ')}
+            </button>
           ))}
         </div>
-      </main>
+
+        {loading ? (
+          <p className="loading">loading orders...</p>
+        ) : error ? (
+          <p className="error">{error}</p>
+        ) : filteredorders.length === 0 ? (
+          <div className="emptystate">
+            <Package className="emptyicon" />
+            <h3 className="emptytitle">No orders found</h3>
+            <p className="emptytext">
+              {activefilter === 'all'
+                ? "You haven't placed any orders yet"
+                : `No ${activefilter} orders found`}
+            </p>
+          </div>
+        ) : (
+          <div className="ordersgrid">
+            {filteredorders.map((order) => (
+              <div key={order.id} className="ordercard">
+                <div className="orderheader">
+                  <div className="orderinfo">
+                    <div className="orderno">order {order.id}</div>
+                    <div className="orderdate">Placed on {formatDate(order.time)}</div>
+                    <div className="orderbatch">Batch #{order.batchNumber}</div>
+                  </div>
+                  <div className={`orderstatus ${order.status}`}>
+                    {getStatusIcon(order.status)}
+                    <span>{order.status.charAt(0).toUpperCase() + order.status.slice(1).replace('_', ' ')}</span>
+                  </div>
+                </div>
+
+                <div className="orderitems">
+                  <div className="orderitem">
+                    <div className="itemdetails">
+                      <div className="itemname">{order.product.name}</div>
+                      <div className="itemmeta">
+                        Size: {order.size} • Qty: {order.quantity}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="orderfooter">
+                  <div className="orderactions">
+                    <button className="actionb sec">
+                      <Eye size={14} /> View Details
+                    </button>
+                    {order.status === 'delivered' && (
+                      <button className="actionb prim">
+                        <RotateCcw size={14} /> Reorder
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-export default OrdersPage;
+export default ordersPage;

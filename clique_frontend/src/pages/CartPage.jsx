@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Minus, Plus, Trash2, ArrowLeft, Clock, Truck, Shield, ShoppingBag } from 'lucide-react';
 import Header from './Header';
-import './CartPage.css';
+import '.styles/CartPage.css';
 
 function CartPage({ navigate }) {
   const [cartitems, setcartitems] = useState([]);
