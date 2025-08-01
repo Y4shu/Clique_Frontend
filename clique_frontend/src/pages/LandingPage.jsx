@@ -29,7 +29,7 @@ function LandingPage({ isLoggedIn, onToggleMenu, cartCount, wishlistCount }) {
 
           <h1 className="heroheadline">
             <span className="headlinestatic">People are going to Stare -</span>
-            <span className="headline-dynamic typing-animation">Make it Worth the While</span>
+            <span className="headlinedynamic typing-animation">Make it Worth the While</span>
           </h1>
 
           <p className="herosubtit">
